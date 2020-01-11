@@ -18,7 +18,7 @@
         <a class="navbar-brand" href="#">Fast Food Haven</a>
     </nav>
 
-  <div id = "cards" class = "col mb-4">
+  <div id = "cards">
   </div>
 
   <div style="display:none">
@@ -42,13 +42,21 @@
      newDiv.className = "col mb-4";
      $("#cards").append(newDiv);
 
+     let newDiv1 = document.createElement("div");
+     newDiv1.className = "card";
+     newDiv.appendChild(newDiv1);
+
+
+     let img = document.createElement("IMG");
+     img.className = "card-img-top";
+     newDiv1.appendChild(img);
+
      let newDiv2 = document.createElement("div");
      newDiv2.className = "card-body";
-     newDiv.appendChild(newDiv2);
+     newDiv1.appendChild(newDiv2);
 
      let newTitle = document.createElement("h5");
      newTitle.innerHTML = title;
-     console.log(newTitle.innerHTML);
      newDiv2.appendChild(newTitle);
 
    }
