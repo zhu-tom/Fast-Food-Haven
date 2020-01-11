@@ -19,6 +19,20 @@
         <div class="card-body">
           <h5 class="card-title">Card title</h5>
           <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+    <div class='container'>
+        <div class='row'>
+            <div class='col'>
+                <input class="form-control" type="text" placeholder="Search...">
+            </div>
+            <div class='col-2'>
+                <input type='button' class='btn btn-block btn-secondary' data-toggle="collapse" href="#filters" role="button" aria-expanded="false" aria-controls="filters" value='Filter'>
+            </div>
+            <div class="collapse container" id="filters">
+                <div class="card-body">
+                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident.
+                </div>
+                <hr/>
+            </div>
         </div>
       </div>
     </div>
