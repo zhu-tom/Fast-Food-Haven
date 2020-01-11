@@ -1,8 +1,6 @@
 
 
-<?php
-  $data = file_get_contents("mcdonalds_coupon.csv");
-?>
+
 
 <!DOCTYPE html>
 <html>
@@ -21,10 +19,6 @@
     </nav>
 
   <div id = "cards" class = "col mb-4">
-  </div>
-
-  <div style="display:none">
-      <textarea id="alldata"><?php echo $data ?></textarea>
   </div>
 
     <div class='container'>
@@ -103,29 +97,7 @@
 </html>
 
 <script>
-   let data = $("#alldata").val();
-
-   let lines = data.split("\n");
-   for(let i = 1; i<lines.length;i++)
-   {
-     let line = lines[i].split(":");
-     let title = line[0];
-     let content = line[1];
-
-     let newDiv = document.createElement("div");
-     newDiv.className = "col mb-4";
-     $("#cards").append(newDiv);
-
-     let newDiv2 = document.createElement("div");
-     newDiv2.className = "card-body";
-     newDiv.appendChild(newDiv2);
-
-     let newTitle = document.createElement("h5");
-     newTitle.innerHTML = title;
-     console.log(newTitle.innerHTML);
-     newDiv2.appendChild(newTitle);
-
-   }
+   
 </script>
 
 <!-- <div class="col mb-4">
