@@ -16,6 +16,14 @@ $(document).ready(() => {
                 newDiv.className = "col mb-4";
                 $("#cards").append(newDiv);
 
+                let newDiv1 = document.createElement("div");
+                newDiv1.className = "card";
+                newDiv.appendChild(newDiv1);
+
+                let img = document.createElement("IMG");
+                img.className = "card-img-top";
+                newDiv1.appendChild(img);
+
                 let newDiv2 = document.createElement("div");
                 newDiv2.className = "card-body";
                 newDiv.appendChild(newDiv2);
