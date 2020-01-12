@@ -1,4 +1,4 @@
-var result, perRow = 3;
+var original, sortedState, perRow = 3;
 
 function refreshTimes(data) {
     let currDate = new Date();
@@ -131,9 +131,10 @@ $(document).ready(() => {
             $('#cards').css('display', 'none');
         },
         success: (response) => {
-            result = response;
-            refreshTimes(result);
-            showResults(sortPrices(JSON.parse(JSON.stringify(result)), 'Low to High'));
+            original = response;
+            refreshTimes(original);
+            sortedState = sortPrices(JSON.parse(JSON.stringify(original)), 'Low to High');
+            showResults(sortedState);
 
         },
         complete: () => {
@@ -143,12 +144,13 @@ $(document).ready(() => {
     });
     $('#applyFilters').on('click', () => {
         copy = [];
-        for (res of result) {
+        for (res of original) {
             if (res.restaurant == $('#restaurant').val() || $('#restaurant').val() == 'All') {
                 copy.push(res);
             }
         }
-        showResults(sortPrices(copy, $('#ordering').val()));
+        sortedState = sortPrices(copy, $('#ordering').val());
+        showResults(sortedState);
     });
     $(document).on('click', '#magnification > button', (event) => {
         perRow = perRow + parseInt($(event.target).val());
@@ -158,7 +160,7 @@ $(document).ready(() => {
         else if (perRow > 6) {
             perRow = 6;
         }
-        showResults(result);
+        showResults(sortedState);
     });
     $(document).on('click', '#filter', () => {
         if ($('#filter').hasClass('active')) {
@@ -171,7 +173,7 @@ $(document).ready(() => {
     $(document).on('keyup', '#search', (event) => {
         let matches = [];
         let searchVal = $(event.target).val().toLowerCase();
-        for (res of result) {
+        for (res of original) {
             if ((res.title + res.description).toLowerCase().includes(searchVal)) {
                 matches.push(res);
             }

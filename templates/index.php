@@ -29,8 +29,8 @@
     transition: 0.5s ease;
   }
 
-  small{
-    color: #EFEFEF;
+  .text-muted{
+    color: #FFFFFF !important;
   }
 
   body{
