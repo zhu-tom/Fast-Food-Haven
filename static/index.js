@@ -23,7 +23,7 @@ function showResults(data) {
         let days = Math.floor((expTime-currDate)/1000/60/60/24);
         let hours = Math.floor((expTime-currDate)/1000/60/60%24);
         data[i].expires.timeTo = {days: days, hours: hours};
-        
+
         let card = '<div class="card mb-4">\
                         <a href="' + data[i].url + '"><img src="' + data[i].image + '" class="card-img-top" alt="No Image Found"></a>\
                         <div class="card-body">\
@@ -134,7 +134,7 @@ $(document).ready(() => {
             result = response;
             refreshTimes(result);
             showResults(sortPrices(JSON.parse(JSON.stringify(result)), 'Low to High'));
-            
+
         },
         complete: () => {
             $('#spinner').css('display', 'none');

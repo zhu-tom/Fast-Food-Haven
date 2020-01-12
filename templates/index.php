@@ -12,10 +12,39 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script src="/static/index.js"></script>
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+
+<style>
+
+  .card{
+    border-color: black;
+    background-color: #565656;
+    color: #EFEFEF;
+    transition: 0.5s ease;
+  }
+
+  .card:hover{
+    transform: translateY(-15px);
+    box-shadow: 10px 10px 5px #888888;
+    transition: 0.5s ease;
+  }
+
+  small{
+    color: #EFEFEF;
+  }
+
+  body{
+    background-color: #D7CEC7;
+  }
+
+</style>
+
+
+
 </head>
 <body>
-    <nav class="navbar navbar-light bg-light" style='margin-bottom:10px;'>
-        <a class="navbar-brand" href="#">Fast Food Haven</a>
+    <nav class="navbar navbar-dark bg-dark" style='margin-bottom:10px;'>
+        <a style='margin-left: 44%;'class="navbar-brand" href="#">Fast Food Haven</a>
     </nav>
 
     <div class='container'>
