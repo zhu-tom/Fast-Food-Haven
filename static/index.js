@@ -1,6 +1,7 @@
 var result;
 
 function showResults(data) {
+    console.log(data);
     $('#cards').text('');
     $('#cards').append('<p>' + data.length + ' Results</p>');
     let perRow = 3;
