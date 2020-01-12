@@ -30,9 +30,13 @@
   }
 
   .text-muted{
-    color: #FFFFFF !important;
+    color: #EFEFEF !important;
   }
 
+  a, a:hover, a:visited, a:link, a:active {
+    text-decoration: none;    
+    color: #EFEFEF;
+  }
   body{
     background-color: #D7CEC7;
   }

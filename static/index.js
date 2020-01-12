@@ -27,7 +27,7 @@ function showResults(data) {
         let card = '<div class="card mb-4">\
                         <a href="' + data[i].url + '"><img src="' + data[i].image + '" class="card-img-top" alt="No Image Found"></a>\
                         <div class="card-body">\
-                            <h5 class="card-title">'+ data[i].title + '</h5>\
+                            <a href="' + data[i].url + '"><h5 class="card-title">'+ data[i].title + '</h5></a>\
                             <p class="card-text">' + data[i].description +'</p>\
                         </div>\
                         <div class="card-footer">\
