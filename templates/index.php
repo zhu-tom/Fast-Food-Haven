@@ -36,22 +36,20 @@
                     <div class='col-2'>
                         <select id='restaurant' class='custom-select'>
                             <option value='All' selected>All</option>
-                            <option value='Harveys'>Harvey's</option>
+                            <option value="Harvey's">Harvey's</option>
                             <option value='KFC'>KFC</option>
                             <option value='McDonalds'>McDonald's</option>
                         </select>
                     </div>
                     <div class='col-1 form-inline justify-content-end'>
-                        <label for='perRow' class='form-label mr-0'>Per Row</label>
+                        <label for='price' class='form-label mr-0'>Order</label>
                     </div>
                     <div class='col-2'>
-                        <input id='perRow' class='form-control' type='number' min='2' max='5' placeholder='3'>
-                    </div>
-                    <div class='col-1 form-inline justify-content-end'>
-                        <label for='price' class='form-label mr-0'>Price</label>
-                    </div>
-                    <div class='col-2'>
-                        <input type='button' class='btn btn-success' id='price' value='Low to High'>
+                        <select id='ordering' class='custom-select'>
+                            <option value='Low to High' selected>Low to High</option>
+                            <option value="High to Low">High to Low</option>
+                            <option value='Expiring Soon'>Earliest Expiry</option>
+                        </select>
                     </div>
                     <div class='col'>
                         <input type='button' style='float:right;' class='btn btn-light' id='applyFilters' value='Apply'>

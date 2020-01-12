@@ -18,9 +18,12 @@ def findDeals(url):
         deal['title'], deal['description'] = [el.strip() for el in details.find('span', {'class', 'show_long_title'}).text.split(':')]
         deal['url'] = details.find('a', {'class': 'get_offer'})['href']
         
-        dates = page.find('div', {'id':'offer_meta'}).find('div', {'class':'dates'})
-        for el in ['posted','starts','expires']:
-            deal[el] = dates.find('label', {'for': el}).findNext('time')['datetime']
+        dates = page.find('div', {'id':'offer_meta'}).find('div', {'class':'dates'}).find('label', {'for':'expires'}).findNext('time')
+        deal['expires'] = {'datetime':dates['datetime'], 'display':dates.text.strip()}
+        # for el in ['posted','starts','expires']:
+        #     deal[el] = {}
+        #     datetime = dates.find('label', {'for': el}).findNext('time')
+        #     deal[el]['datetime'], deal[el]['display'] = datetime['datetime'], datetime.text.strip()
             
         try:
             if deal['restaurant'] == 'McDonalds':
