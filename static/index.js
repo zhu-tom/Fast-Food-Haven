@@ -30,7 +30,7 @@ function showResults(data) {
                         <div class="card-body" style="padding-top:1rem; padding-right:1rem;">\
                             <div style="padding-left:1em; padding-right:0.75em;" class="row justify-content-between">\
                                 <a href="' + data[i].url + '"><h5 class="card-title">'+ data[i].title + '</h5></a>\
-                                <button href="'+ (nearest[data[i].restaurant] != null ? 'https://www.google.com/maps/place/?q=place_id:' + nearest[data[i].restaurant].destid : '') +'" class="btn btn-primary btn-sm location" style="float:right;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>'+(nearest[data[i].restaurant] != null ? nearest[data[i].restaurant].rows[0].elements[0].distance.text : 'Closed')+'</button>\
+                                <button class="btn btn-primary btn-sm location" style="float:right;"><a'+ (nearest[data[i].restaurant] != null ? ' href="https://www.google.com/maps/place/?q=place_id:' + nearest[data[i].restaurant].destid + '"' : '') + '><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>'+(nearest[data[i].restaurant] != null ? nearest[data[i].restaurant].rows[0].elements[0].distance.text : 'Closed')+'</a></button>\
                             </div>\
                             <p class="card-text">' + data[i].description +'</p>\
                         </div>\
@@ -56,6 +56,7 @@ function getLocation(d1) {
         var options = {timeout:60000};
         navigator.geolocation.getCurrentPosition((position)=> {
             data = {lat: position.coords.latitude, lon: position.coords.longitude, restaurant: 'McDonalds'};
+            console.log(data);
             $.ajax({
                 url: '/getNearest',
                 method: 'POST',
@@ -157,6 +158,17 @@ function sortPrices(data, key) {
     }
 }
 
+function applyFilters(data) {
+    copy = [];
+    for (res of data) {
+        if (res.restaurant == $('#restaurant').val() || $('#restaurant').val() == 'All') {
+            copy.push(res);
+        }
+    }
+    sortedState = sortPrices(copy, $('#ordering').val());
+    return sortedState;
+}
+
 $(document).ready(() => {
     var d1 = $.Deferred();
     getLocation(d1);
@@ -183,20 +195,9 @@ $(document).ready(() => {
             }
         });
     });
-
-    $(document).on('click', '.location', (event) => {
-        window.location.href = $(event.target).attr('href');
-    });
     
     $('#applyFilters').on('click', () => {
-        copy = [];
-        for (res of original) {
-            if (res.restaurant == $('#restaurant').val() || $('#restaurant').val() == 'All') {
-                copy.push(res);
-            }
-        }
-        sortedState = sortPrices(copy, $('#ordering').val());
-        showResults(sortedState);
+        showResults(applyFilters(original));
     });
     $(document).on('click', '#magnification > button', (event) => {
         perRow = perRow + parseInt($(event.target).val());
@@ -224,6 +225,6 @@ $(document).ready(() => {
                 matches.push(res);
             }
         }
-        showResults(matches)
+        showResults(applyFilters(matches));
     });
 });
