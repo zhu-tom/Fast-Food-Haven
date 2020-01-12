@@ -1,7 +1,8 @@
 import mechanicalsoup
 
+browser = mechanicalsoup.StatefulBrowser()
+
 def findDeals(url):
-    browser = mechanicalsoup.StatefulBrowser()
     browser.open(url)
     offers = browser.get_current_page().find("section", {"id":"offers"}).find_all('li')
     deals = []
@@ -20,10 +21,7 @@ def findDeals(url):
         
         dates = page.find('div', {'id':'offer_meta'}).find('div', {'class':'dates'}).find('label', {'for':'expires'}).findNext('time')
         deal['expires'] = {'datetime':dates['datetime'], 'display':dates.text.strip()}
-        # for el in ['posted','starts','expires']:
-        #     deal[el] = {}
-        #     datetime = dates.find('label', {'for': el}).findNext('time')
-        #     deal[el]['datetime'], deal[el]['display'] = datetime['datetime'], datetime.text.strip()
+
         appended = False
         try:
             if deal['restaurant'] == 'McDonalds':
