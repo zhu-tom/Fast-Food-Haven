@@ -1,4 +1,5 @@
 var original, sortedState, perRow = 3;
+var nearest;
 
 function refreshTimes(data) {
     let currDate = new Date();
@@ -26,8 +27,11 @@ function showResults(data) {
 
         let card = '<div class="card mb-4">\
                         <a href="' + data[i].url + '"><img src="' + data[i].image + '" class="card-img-top" alt="No Image Found"></a>\
-                        <div class="card-body">\
-                            <a href="' + data[i].url + '"><h5 class="card-title">'+ data[i].title + '</h5></a>\
+                        <div class="card-body" style="padding-top:1rem; padding-right:1rem;">\
+                            <div style="padding-left:1em; padding-right:0.75em;" class="row justify-content-between">\
+                                <a href="' + data[i].url + '"><h5 class="card-title">'+ data[i].title + '</h5></a>\
+                                <button class="btn btn-primary btn-sm" style="float:right;"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M21 3L3 10.53v.98l6.84 2.65L12.48 21h.98L21 3z"/></svg>'+(nearest[data[i].restaurant] != null ? nearest[data[i].restaurant].rows[0].elements[0].distance.text : 'Closed')+'</button>\
+                            </div>\
                             <p class="card-text">' + data[i].description +'</p>\
                         </div>\
                         <div class="card-footer">\
@@ -44,6 +48,40 @@ function showResults(data) {
         for (let i = 1; i<=perRow-data.length%perRow; i++) {
             $('#cards').children().last().append(emptyCard)
         }
+    }
+}
+
+function getLocation(d1) {
+    if (navigator.geolocation) {
+        var options = {timeout:60000};
+        navigator.geolocation.getCurrentPosition((position)=> {
+            data = {lat: position.coords.latitude, lon: position.coords.longitude, restaurant: 'McDonalds'};
+            $.ajax({
+                url: '/getNearest',
+                method: 'POST',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                beforeSend: () => {
+                    $('#spinner').css('display', 'block');
+                    $('#cards').css('display', 'none');
+                },
+                success: (response) => {
+                    nearest = {"A & W": response.AW, "McDonalds": response.McDonalds, "Harvey's": response.Harveys, "KFC": response.KFC};
+                    console.log(nearest);
+                    d1.resolve();
+                }
+            });
+        }, (err) => {
+            if (err.code == 1) {
+                alert('Access denied');
+            }
+            else if (err.code == 2) {
+                alert('Position unavailable');
+            }
+        }, options);
+    }
+    else {
+        alert("Browser does not support geolocation");
     }
 }
 
@@ -120,28 +158,32 @@ function sortPrices(data, key) {
 }
 
 $(document).ready(() => {
-    data = {restaurants: ['KFC', 'McDonalds','Harveys']};
-    $.ajax({
-        url: '/getDeals',
-        method: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify(data),
-        beforeSend: () => {
-            $('#spinner').css('display', 'block');
-            $('#cards').css('display', 'none');
-        },
-        success: (response) => {
-            original = response;
-            refreshTimes(original);
-            sortedState = sortPrices(JSON.parse(JSON.stringify(original)), 'Low to High');
-            showResults(sortedState);
-
-        },
-        complete: () => {
-            $('#spinner').css('display', 'none');
-            $('#cards').css('display', 'block');
-        }
+    var d1 = $.Deferred();
+    getLocation(d1);
+    $.when(d1).done(() => {
+        $.ajax({
+            url: '/getDeals',
+            method: 'POST',
+            contentType: 'application/json',
+            beforeSend: () => {
+                $('#spinner').css('display', 'block');
+                $('#cards').css('display', 'none');
+            },
+            success: (response) => {
+                original = response;
+                console.log(response);
+                refreshTimes(original);
+                sortedState = sortPrices(JSON.parse(JSON.stringify(original)), 'Low to High');
+                showResults(sortedState);
+    
+            },
+            complete: () => {
+                $('#spinner').css('display', 'none');
+                $('#cards').css('display', 'block');
+            }
+        });
     });
+    
     $('#applyFilters').on('click', () => {
         copy = [];
         for (res of original) {

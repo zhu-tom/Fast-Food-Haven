@@ -24,28 +24,36 @@ def findDeals(url):
         #     deal[el] = {}
         #     datetime = dates.find('label', {'for': el}).findNext('time')
         #     deal[el]['datetime'], deal[el]['display'] = datetime['datetime'], datetime.text.strip()
-            
+        appended = False
         try:
             if deal['restaurant'] == 'McDonalds':
                 extras = page.find('div',{'id':'description'}).find_all('ul')[1].find_all('a')
             elif deal['restaurant'] == 'KFC':
                 extras = page.find('div',{'id': 'description'}).find_all('ul')[1].find_all('li')
+            elif deal['restaurant'] == 'A & W':
+                extras = []
+                for ul in page.find('div',{'id':'description'}).find_all('ul'):
+                    extras += ul.find_all('a')
 
             for item in extras:
                 copy = {}
                 for key in deal:
                     copy[key] = deal[key]
-                if deal['restaurant'] == 'McDonalds':
+                if deal['restaurant'] == 'McDonalds' or deal['restaurant'] == 'A & W':
                     copy['url'] = item['href']
                 copy['description'] = item.text.strip()
                 deals.append(copy)
-        except Exception:
+                appended = True
+        except:
+            deals.append(deal)
+            appended = True
+        if not appended:
             deals.append(deal)
     return deals
 
 def goToRests(rests):
     result = []
-    urls = {'McDonalds':'https://www.redflagdeals.com/canada/kfc-deals-coupons-sales/', 'KFC':'https://www.redflagdeals.com/canada/mcdonalds-deals-coupons-sales/', 'Harveys':'https://www.redflagdeals.com/canada/harveys-deals-coupons-sales/'}
+    urls = {'A & W':'https://www.redflagdeals.com/canada/a-and-w-deals-coupons-sales/','McDonalds':'https://www.redflagdeals.com/canada/kfc-deals-coupons-sales/', 'KFC':'https://www.redflagdeals.com/canada/mcdonalds-deals-coupons-sales/', 'Harveys':'https://www.redflagdeals.com/canada/harveys-deals-coupons-sales/'}
 
     for rest in rests:
         if rest in urls:
