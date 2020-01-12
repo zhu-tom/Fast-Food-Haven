@@ -1,31 +1,51 @@
+var result;
+
+function showResults(data) {
+    $('#cards').append('<p>' + data.length + ' Results</p>');
+    console.log(data);
+    let perRow = 3;
+    for (let i = 0; i < data.length; i++) {
+        if (i % perRow == 0) {
+            $('#cards').append('<div class="card-deck"></div>');
+        }
+        let card = '<div class="card mb-4">\
+                        <a href="' + data[i].url + '"><img src="' + data[i].image + '" class="card-img-top" alt="No Image Found"></a>\
+                        <div class="card-body">\
+                            <h5 class="card-title">'+ data[i].title + '</h5>\
+                            <p class="card-text">' + data[i].description +'</p>\
+                        </div>\
+                    </div>'
+        $('#cards').children().last().append(card);
+    }
+    let emptyCard = '<div class="card mb-4">\
+                        <div class="card-body">\
+                        </div>\
+                    </div>'
+    if (data.length % perRow != 0) {
+        for (let i = 1; i<=perRow-data.length%perRow; i++) {
+            $('#cards').children().last().append(emptyCard)
+        }
+    }
+}
+
 $(document).ready(() => {
-    data = {restaurants: ['KFC', 'McDonalds']};
+    data = {restaurants: ['KFC', 'McDonalds','Harveys']};
     $.ajax({
         url: '/getDeals',
         method: 'POST',
         contentType: 'application/json',
         data: JSON.stringify(data),
         beforeSend: () => {
-            
+            $('#spinner').css('display', 'block');
+            $('#cards').css('display', 'none');
         },
         success: (result) => {
-            console.log(result);
-            for (let i = 0; i < result.length; i++) {
-                if (i % 3 == 0) {
-                    $('#cards').append('<div class="card-deck"></div>');
-                }
-                let card = '<div class="card mb-4">\
-                                <a href="' + result[i].url + '"><img src="' + result[i].image + '" class="card-img-top" alt="No Image Found"></a>\
-                                <div class="card-body">\
-                                    <h5 class="card-title">'+ result[i].title + '</h5>\
-                                    <p class="card-text">' + result[i].description +'</p>\
-                                </div>\
-                            </div>'
-                $('#cards').children().last().append(card);
-            }
+            showResults(result);
+            
         },
         complete: () => {
-
+            $('#spinner').css('display', 'none');
+            $('#cards').css('display', 'block');
         }
     });
     // $.ajax({

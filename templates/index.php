@@ -38,11 +38,10 @@
                         
                             <select id='restaurant' class='custom-select'>
                                 <option value='' selected disabled>Choose a chain</option>
+                                <option value='Harveys'>Harvey's</option>
+                                <option value='KFC'>KFC</option>
+                                <option value='McDonalds'>McDonald's</option>
                             </select>
-                        </div>
-                        <div class='col-4 form-inline'>
-                            <label for='price' class='form-label mr-2'>Price</label>
-                            <input id='price' type='button' class='btn btn-success' value='Low to High'>
                         </div>
                     </div>
             </div>
@@ -50,6 +49,11 @@
         <hr/>
     </div>
     <div class='container'>
+    <div class="d-flex justify-content-center">
+            <div id='spinner' class="spinner-border" style='display:none' role="status">
+                <span class="sr-only">Loading...</span>
+            </div>
+    </div>
     <div id = "cards">
 
     </div>
