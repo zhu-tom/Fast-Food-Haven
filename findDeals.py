@@ -17,27 +17,28 @@ def findDeals(url):
         details = page.find('div', {'id':'details'})
         deal['title'], deal['description'] = [el.strip() for el in details.find('span', {'class', 'show_long_title'}).text.split(':')]
         deal['url'] = details.find('a', {'class': 'get_offer'})['href']
-
-        if deal['restaurant'] == 'McDonalds':
-            try:
+        try:
+            if deal['restaurant'] == 'McDonalds':
                 extras = page.find('div',{'id':'description'}).find_all('ul')[1].find_all('a')
+            elif deal['restaurant'] == 'KFC':
+                extras = page.find('div',{'id': 'description'}).find_all('ul')[1].find_all('li')
 
-                for item in extras:
-                    copy = {}
-                    for key in deal:
-                        copy[key] = deal[key]
+            for item in extras:
+                copy = {}
+                for key in deal:
+                    copy[key] = deal[key]
+                if deal['restaurant'] == 'McDonalds':
                     copy['url'] = item['href']
-                    copy['description'] = item.text.strip()
-                    deals.append(copy)
-            except Exception:
-                deals.append(deal)
-        else:
+                copy['description'] = item.text.strip()
+                deals.append(copy)
+        except Exception:
             deals.append(deal)
     return deals
 
 def goToRests(rests):
     result = []
-    urls = {'McDonalds':'https://www.redflagdeals.com/canada/kfc-deals-coupons-sales/', 'KFC':'https://www.redflagdeals.com/canada/mcdonalds-deals-coupons-sales/'}
+    urls = {'McDonalds':'https://www.redflagdeals.com/canada/kfc-deals-coupons-sales/', 'KFC':'https://www.redflagdeals.com/canada/mcdonalds-deals-coupons-sales/', 'Harveys':'https://www.redflagdeals.com/canada/harveys-deals-coupons-sales/'}
+
     for rest in rests:
         if rest in urls:
             result += findDeals(urls[rest])
