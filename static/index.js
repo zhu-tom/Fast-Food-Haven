@@ -78,7 +78,7 @@ function sortPrices(data, key) {
         }
         return arrLocal;
     }
-    else if (key == "High to Low") {
+    else if (key === "High to Low") {
         let arrPrice = [];
         let arrLocal = [];
         for(res of data)
@@ -141,9 +141,6 @@ $(document).ready(() => {
             $('#cards').css('display', 'block');
         }
     });
-    $(document).on('click', '#price', () => {
-        $('#price').attr('value') == 'Low to High' ? $('#price').attr('value', 'High to Low').removeClass('btn-success').addClass('btn-danger') : $('#price').attr('value', 'Low to High').removeClass('btn-danger').addClass('btn-success');
-    });
     $('#applyFilters').on('click', () => {
         copy = [];
         for (res of result) {
@@ -151,7 +148,7 @@ $(document).ready(() => {
                 copy.push(res);
             }
         }
-        showResults(sortPrices(copy, $('#ordering').attr('value')));
+        showResults(sortPrices(copy, $('#ordering').val()));
     });
     $(document).on('click', '#magnification > button', (event) => {
         perRow = perRow + parseInt($(event.target).val());
