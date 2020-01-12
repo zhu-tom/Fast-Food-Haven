@@ -158,6 +158,17 @@ function sortPrices(data, key) {
     }
 }
 
+function applyFilters(data) {
+    copy = [];
+    for (res of data) {
+        if (res.restaurant == $('#restaurant').val() || $('#restaurant').val() == 'All') {
+            copy.push(res);
+        }
+    }
+    sortedState = sortPrices(copy, $('#ordering').val());
+    return sortedState;
+}
+
 $(document).ready(() => {
     var d1 = $.Deferred();
     getLocation(d1);
@@ -186,14 +197,7 @@ $(document).ready(() => {
     });
     
     $('#applyFilters').on('click', () => {
-        copy = [];
-        for (res of original) {
-            if (res.restaurant == $('#restaurant').val() || $('#restaurant').val() == 'All') {
-                copy.push(res);
-            }
-        }
-        sortedState = sortPrices(copy, $('#ordering').val());
-        showResults(sortedState);
+        showResults(applyFilters(original));
     });
     $(document).on('click', '#magnification > button', (event) => {
         perRow = perRow + parseInt($(event.target).val());
@@ -221,6 +225,6 @@ $(document).ready(() => {
                 matches.push(res);
             }
         }
-        showResults(matches)
+        showResults(applyFilters(matches));
     });
 });
