@@ -22,28 +22,41 @@
         <div class='form-row'>
             <div class='col'>
                 <div class="input-group">
-                    <input type="text" class="form-control" placeholder="Search...">
+                    <input type="text" id='search' class="form-control" placeholder="Search...">
                     <div class="input-group-append">
-                        <input type='button' class='btn btn-block btn-secondary' data-toggle="collapse" href="#filters" role="button" aria-expanded="true" aria-controls="filters" value='Filters'>
+                        <input id='filter' type='button' class='btn btn-block btn-outline-secondary active' data-toggle="collapse" href="#filters" role="button" aria-expanded="true" aria-controls="filters" value='Filters'>
                     </div>
                 </div>
             </div>
-            <div class='col-2'>
-                <input type='button' class='btn btn-block btn-primary' value='Search'>
-            </div>
             <div class="collapse container show" id="filters">
-                    <div class="form-row mt-4 form-group">
-                        <div class='col-4 form-inline'>
-                            <label for='restaurant' class='form-label mr-2'>Restaurant</label>
-                        
-                            <select id='restaurant' class='custom-select'>
-                                <option value='' selected disabled>Choose a chain</option>
-                                <option value='Harveys'>Harvey's</option>
-                                <option value='KFC'>KFC</option>
-                                <option value='McDonalds'>McDonald's</option>
-                            </select>
-                        </div>
+                <div class="form-row mt-4 form-group">
+                    <div class='col-1 form-inline'>
+                        <label for='restaurant' class='form-label mr-2'>Restaurant</label>
                     </div>
+                    <div class='col-2'>
+                        <select id='restaurant' class='custom-select'>
+                            <option value='All' selected>All</option>
+                            <option value='Harveys'>Harvey's</option>
+                            <option value='KFC'>KFC</option>
+                            <option value='McDonalds'>McDonald's</option>
+                        </select>
+                    </div>
+                    <div class='col-1 form-inline justify-content-end'>
+                        <label for='perRow' class='form-label mr-0'>Per Row</label>
+                    </div>
+                    <div class='col-2'>
+                        <input id='perRow' class='form-control' type='number' min='2' max='5' placeholder='3'>
+                    </div>
+                    <div class='col-1 form-inline justify-content-end'>
+                        <label for='price' class='form-label mr-0'>Price</label>
+                    </div>
+                    <div class='col-2'>
+                        <input type='button' class='btn btn-success' id='price' value='Low to High'>
+                    </div>
+                    <div class='col'>
+                        <input type='button' style='float:right;' class='btn btn-light' id='applyFilters' value='Apply'>
+                    </div>
+                </div>
             </div>
         </div>
         <hr/>
