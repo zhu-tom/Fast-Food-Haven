@@ -39,7 +39,8 @@ $(document).ready(() => {
             $('#spinner').css('display', 'block');
             $('#cards').css('display', 'none');
         },
-        success: (result) => {
+        success: (response) => {
+            result = response;
             showResults(result);
             
         },
