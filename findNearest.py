@@ -12,5 +12,6 @@ def findNearest(lat, lon, rest):
 
 def findDist(lat, lon, dest):
     url = f'https://maps.googleapis.com/maps/api/distancematrix/json?origins={lat},{lon}&destinations=place_id:{dest}&key={key}'
-    response = requests.get(url)
-    return response.json()
+    response = requests.get(url).json()
+    response['destid'] = dest
+    return response
