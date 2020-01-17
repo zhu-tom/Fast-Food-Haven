@@ -11,9 +11,11 @@ def findDeals(url):
 
         deal['restaurant'] = offer['data-dealer-name'].strip()
         deal['image'] = 'https:' + offer.find('a', {'class':'offer_image'}).find('img')['src']
-        deal['rfgLink'] = 'https://www.redflagdeals.com' + offer.find('a', {'class':'offer_title'})['href']
+        link = offer.find('a', {'class':'offer_title'})['href']
+        deal['rfgLink'] = 'https://www.redflagdeals.com' + link
 
-        browser.open(deal['rfgLink'])
+        #browser.open(deal['rfgLink'])
+        browser.follow_link(link)
         page = browser.get_current_page()
         details = page.find('div', {'id':'details'})
         deal['title'], deal['description'] = [el.strip() for el in details.find('span', {'class', 'show_long_title'}).text.split(':')]
