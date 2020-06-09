@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
-from findDeals import findDeals, goToRests
-from findNearest import findNearest
+from app.findDeals import findDeals, goToRests
+from app.findNearest import findNearest
 
 app = Flask(__name__)
 
