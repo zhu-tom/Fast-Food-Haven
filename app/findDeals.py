@@ -18,7 +18,7 @@ def findDeals(url):
         browser.follow_link(link)
         page = browser.get_current_page()
         details = page.find('div', {'id':'details'})
-        deal['title'], deal['description'] = [el.strip() for el in details.find('span', {'class', 'show_long_title'}).text.split(':')]
+        deal['title'], deal['description'] = [el.strip() for el in details.find('span', {'class', 'show_long_title'}).text.split(':', 1)]
         deal['url'] = details.find('a', {'class': 'get_offer'})['href']
         
         dates = page.find('div', {'id':'offer_meta'}).find('div', {'class':'dates'}).find('label', {'for':'expires'}).findNext('time')
